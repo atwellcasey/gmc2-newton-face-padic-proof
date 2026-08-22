@@ -1,0 +1,1 @@
+# gmc2-newton-face-padic-proof
