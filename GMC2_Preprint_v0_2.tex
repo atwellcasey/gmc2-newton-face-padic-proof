@@ -1,0 +1,508 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{setspace}
+\setstretch{1.04}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{imported}[theorem]{Imported Theorem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\E}{\mathbb E}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\OK}{\mathcal O_K}
+\newcommand{\CT}{\operatorname{CT}}
+\newcommand{\Newt}{\operatorname{Newt}}
+\newcommand{\wt}{\operatorname{wt}}
+\newcommand{\conv}{\operatorname{conv}}
+\newcommand{\im}{\operatorname{im}}
+
+\title{\textbf{A Newton-Face and $p$-Adic Proof of the\\Two-Dimensional Gaussian Moments Conjecture}}
+\author{Casey Atwell\\Independent researcher}
+\date{July 24, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\emph{Preprint. Comments and corrections are welcome.}
+\end{center}
+
+\begin{abstract}
+Let $X,Y$ be independent standard real Gaussian random variables. We prove that if $P\in\C[X,Y]$ satisfies
+\[
+\E[P(X,Y)^m]=0
+\qquad
+\text{for every integer }m\ge 1,
+\]
+then, for every $Q\in\C[X,Y]$,
+\[
+\E[Q(X,Y)P(X,Y)^m]=0
+\]
+for all sufficiently large $m$. Thus the Gaussian Moments Conjecture holds in dimension two.
+
+After passing to circular complex Gaussian coordinates, Gaussian expectation becomes a factorially weighted diagonal functional on a Laurent polynomial. If the weight support of $P$ contains zero in its convex hull, a lowest supporting Newton face and the theorem of Duistermaat and van der Kallen produce a nonzero lowest diagonal coefficient in a power of $P$. We then specialize the coefficients to algebraic integers. Reduction modulo a suitable unramified prime isolates the Frobenius image of the distinguished coefficient, while Legendre's formula shows that its factorially weighted contribution has uniquely minimal prime-ideal valuation. The corresponding pure Gaussian moment is therefore nonzero, contradicting the assumed vanishing of all positive moments.
+
+It follows that the weight support is strictly one-sided. Eventual vanishing of every mixed moment then follows directly from weight considerations.
+\end{abstract}
+
+\section{Introduction and main theorem}
+
+Let $G=(G_1,\ldots,G_n)$ be a vector of independent standard real Gaussian random variables. The Gaussian Moments Conjecture in dimension $n$, denoted $\mathrm{GMC}(n)$, asserts that if $P\in\C[x_1,\ldots,x_n]$ satisfies
+\[
+\E[P(G)^m]=0
+\qquad(m\ge1),
+\]
+then, for every $Q\in\C[x_1,\ldots,x_n]$,
+\[
+\E[Q(G)P(G)^m]=0
+\]
+for all sufficiently large $m$.
+
+Derksen, van den Essen, and Zhao introduced the conjecture and related it to the Jacobian Conjecture~\cite{DEVZ}. Long recently constructed explicit counterexamples to $\mathrm{GMC}(3)$, and hence to $\mathrm{GMC}(n)$ for every $n\ge3$, while leaving the richer inhomogeneous two-dimensional case unresolved~\cite[Corollary 5.2 and Section 7]{Long}.
+
+We prove the remaining two-dimensional statement.
+
+\begin{theorem}[Main theorem]\label{thm:main}
+Let $X,Y$ be independent standard real Gaussian random variables. If $P\in\C[X,Y]$ satisfies
+\[
+\E[P^m]=0
+\qquad
+\text{for every }m\ge1,
+\]
+then, for every $Q\in\C[X,Y]$,
+\[
+\E[QP^m]=0
+\]
+for all sufficiently large $m$.
+\end{theorem}
+
+If $P=0$ or $Q=0$, the conclusion is immediate. We therefore assume $P\ne0$ when constructing its support.
+
+\section{Gaussian coordinates and the diagonal functional}
+
+Set
+\[
+Z=\frac{X+iY}{\sqrt2},
+\qquad
+W=\frac{X-iY}{\sqrt2}.
+\]
+Then $W=\overline Z$ as random variables, and rotational invariance gives
+\begin{equation}\label{eq:contraction}
+\E[Z^aW^b]
+=
+\begin{cases}
+a!,&a=b,\\
+0,&a\ne b.
+\end{cases}
+\end{equation}
+
+The change of variables between $(X,Y)$ and $(Z,W)$ is invertible over $\C$. We henceforth regard $P$ and $Q$ as polynomials in the algebraically independent variables $Z,W$, retaining the same symbols. Their evaluation at the random pair $(Z,W)$ is understood in every expectation.
+
+For a monomial $Z^aW^b$, define
+\[
+\wt(Z^aW^b)=a-b.
+\]
+Equation~\eqref{eq:contraction} shows that Gaussian expectation annihilates every monomial of nonzero weight.
+
+Introduce the Laurent-polynomial transform
+\begin{equation}\label{eq:hatP}
+\widehat P(s,u)
+:=
+P\!\left(s,\frac us\right).
+\end{equation}
+Under this substitution,
+\[
+Z^aW^b\longmapsto s^{a-b}u^b.
+\]
+Define a linear functional on $\C[s,s^{-1},u]$ by
+\begin{equation}\label{eq:Lambda}
+\Lambda\!\left(\sum_{k\in\Z}\sum_{j\ge0}a_{k,j}s^ku^j\right)
+:=
+\sum_{j\ge0}j!\,a_{0,j}.
+\end{equation}
+All sums here are finite.
+
+\begin{lemma}[Gaussian diagonal functional]\label{lem:diagonal}
+For every integer $m\ge0$,
+\[
+\Lambda(\widehat P^{\,m})=\E[P^m].
+\]
+\end{lemma}
+
+\begin{proof}
+It is enough to check monomials. The coefficient selected by $s^0$ is precisely the sum of terms $Z^aW^a$, and $\Lambda$ assigns such a term the factor $a!$, exactly as in~\eqref{eq:contraction}.
+\end{proof}
+
+\section{The lowest zero-weight Newton face}
+
+Write
+\begin{equation}\label{eq:support}
+\widehat P(s,u)
+=
+\sum_{(k,h)\in S}c_{k,h}s^ku^h,
+\end{equation}
+where $S\subseteq\Z\times\Z_{\ge0}$ is finite and every displayed coefficient is nonzero. The first coordinate $k$ is the weight of the corresponding monomial of $P$.
+
+Assume that
+\begin{equation}\label{eq:zero-conv}
+0\in\conv\{k:(k,h)\in S\}.
+\end{equation}
+Among all convex combinations of points of $S$ having mean first coordinate zero, define
+\begin{equation}\label{eq:beta}
+\beta
+:=
+\min\left\{
+\sum_i\lambda_i h_i:
+\sum_i\lambda_i k_i=0,
+\ \sum_i\lambda_i=1,
+\ \lambda_i\ge0
+\right\}.
+\end{equation}
+The feasible set is nonempty and compact, so the minimum exists.
+
+Let $C=\conv(S)$. The point $(0,\beta)$ lies on the lower boundary of the compact polygon $C$. Hence there is a supporting affine functional of the form $h-\alpha k$ whose minimum on $C$ is attained at $(0,\beta)$. Therefore, for some $\alpha\in\mathbb R$,
+\begin{equation}\label{eq:support-line}
+h\ge \alpha k+\beta
+\qquad
+\text{for every }(k,h)\in S.
+\end{equation}
+This argument also covers the case in which zero is an endpoint of the projected weight interval.
+
+Let
+\[
+S_0
+:=
+\{(k,h)\in S:h=\alpha k+\beta\}.
+\]
+A minimizing convex combination in~\eqref{eq:beta} is supported on $S_0$, so
+\begin{equation}\label{eq:face-crosses}
+0\in\conv\{k:(k,h)\in S_0\}.
+\end{equation}
+Define the Laurent face polynomial
+\begin{equation}\label{eq:F}
+F(s)
+:=
+\sum_{(k,h)\in S_0}c_{k,h}s^k.
+\end{equation}
+Its Newton interval contains zero.
+
+\begin{imported}[Duistermaat--van der Kallen]\label{thm:DvK}
+Let $F$ be a complex Laurent polynomial. If
+\[
+\CT(F^m)=0
+\qquad(m\ge1),
+\]
+then
+\[
+0\notin\Newt(F).
+\]
+\end{imported}
+
+This is the main theorem of Duistermaat and van der Kallen~\cite{DvK}. By the contrapositive of Theorem~\ref{thm:DvK} and~\eqref{eq:face-crosses}, there exists an integer $N\ge1$ such that
+\begin{equation}\label{eq:A}
+A
+:=
+\CT(F^N)
+\ne0.
+\end{equation}
+Set
+\begin{equation}\label{eq:R}
+R(s,u):=\widehat P(s,u)^N.
+\end{equation}
+Every product contributing to $A$ uses $N$ face monomials whose total first coordinate is zero. Its total $u$-degree is therefore
+\begin{equation}\label{eq:J}
+J=N\beta.
+\end{equation}
+Because an actual monomial product contributes to $A$, $J$ is a nonnegative integer.
+
+For $(k,h)\in S$, define its slack by
+\[
+\sigma(k,h):=h-\alpha k-\beta.
+\]
+Face terms have zero slack and nonface terms have strictly positive slack. For any product of $N$ support monomials with total first coordinate zero,
+\begin{equation}\label{eq:slack}
+h_{\mathrm{total}}
+=
+N\beta+\sum_i\sigma(k_i,h_i).
+\end{equation}
+Thus all-face contributions of total weight zero occur at height $J$, whereas every product using a nonface term occurs strictly above $J$.
+
+\begin{lemma}[Lowest diagonal isolation]\label{lem:face}
+There exist integers $N\ge1$ and $J\ge0$ and a coefficient $A\ne0$ such that, for $R=\widehat P^N$,
+\[
+[s^0u^h]R=0
+\qquad(h<J),
+\]
+\[
+[s^0u^J]R=A,
+\]
+and every monomial $s^ku^h$ occurring in $R$ satisfies
+\[
+h\ge \alpha k+J.
+\]
+\end{lemma}
+
+\begin{proof}
+The first two assertions follow from~\eqref{eq:A}--\eqref{eq:slack}. Summing~\eqref{eq:support-line} over $N$ factors gives the final support inequality.
+\end{proof}
+
+\section{Specialization to algebraic integers}
+
+The next stage uses reduction modulo prime ideals. We show that a hypothetical complex counterexample can be replaced by one whose coefficients are algebraic integers while preserving every moment equation, the exact support, and the nonzero coefficient $A$ selected above.
+
+Fix the support $S$ and replace the nonzero coefficients of $P$ by indeterminates $C_1,\ldots,C_r$. For every $m\ge1$, the moment
+\[
+M_m(C_1,\ldots,C_r):=\E[P_C^m]
+\]
+is a polynomial with rational, in fact integer, coefficients in the $C_i$. The selected face coefficient
+\[
+A(C_1,\ldots,C_r)=\CT(F_C^N)
+\]
+is likewise an integer polynomial.
+
+Let
+\[
+I:=(M_1,M_2,M_3,\ldots)
+\subseteq
+\Q[C_1,\ldots,C_r]
+\]
+and
+\[
+B:=A\prod_{i=1}^r C_i.
+\]
+Although $I$ is defined using infinitely many moment polynomials, the ring $\Q[C_1,\ldots,C_r]$ is Noetherian. Thus $I$ is finitely generated. Consider the localization
+\begin{equation}\label{eq:localization}
+\mathcal A
+:=
+\left(\Q[C_1,\ldots,C_r]/I\right)_B.
+\end{equation}
+Equivalently, one may extend $I$ to $\Q[C_1,\ldots,C_r,B^{-1}]$ and then take the quotient.
+
+If the original complex polynomial satisfies all moment equations and has the prescribed nonzero support coefficients and $A\ne0$, evaluation at its coefficient vector defines a homomorphism $\mathcal A\to\C$. Hence $\mathcal A\ne0$.
+
+Choose a maximal ideal $\mathfrak m$ of $\mathcal A$. The residue field
+\[
+K:=\mathcal A/\mathfrak m
+\]
+is a field finitely generated as a $\Q$-algebra. By Zariski's lemma, $K$ is a finite algebraic extension of $\Q$. The images of the $C_i$ in $K$ satisfy every moment equation, remain nonzero, and preserve $A\ne0$. Choosing an embedding $K\hookrightarrow\C$ returns a complex polynomial of the kind required by the original conjecture.
+
+Since only finitely many specialized coefficients occur, there exists $c\in\Z_{>0}$ such that $cC_i\in\mathcal O_K$ for every $i$. Replacing $P$ by $cP$ preserves every moment equation and replaces the selected coefficient $A$ by $c^N A\ne0$.
+
+\begin{lemma}[Algebraic-integer specialization]\label{lem:specialization}
+If there is a complex polynomial with the fixed support for which all positive moments vanish and for which the selected face coefficient $A$ is nonzero, then there is such a polynomial with the same support and coefficients in the ring of integers $\mathcal O_K$ of a number field $K$, with the corresponding $A$ still nonzero.
+\end{lemma}
+
+\begin{remark}
+No finite truncation of the moment conditions is made. The full moment ideal is imposed in~\eqref{eq:localization}; Noetherianity is used only to show that the resulting algebra is of finite type over $\Q$.
+\end{remark}
+
+\section{Frobenius and factorial-valuation isolation}
+
+Assume from now on that the coefficients of $R$ lie in $\mathcal O_K$. Choose a rational prime $p$ such that
+\begin{enumerate}[label=(\roman*)]
+\item $p>J$;
+\item $p$ is unramified in $K$;
+\item $p\nmid N_{K/\Q}(A)$.
+\end{enumerate}
+Only finitely many rational primes are excluded, so infinitely many such primes exist. Choose a prime ideal $\mathfrak p\subseteq\mathcal O_K$ above $p$. Then $A\notin\mathfrak p$.
+
+Write
+\[
+R(s,u)=\sum_{k,h}r_{k,h}s^ku^h
+\]
+and define
+\begin{equation}\label{eq:dL}
+d_L:=[s^0u^L]R(s,u)^p.
+\end{equation}
+By Lemma~\ref{lem:face}, every monomial of $R^p$ satisfies
+\[
+h\ge \alpha k+pJ.
+\]
+At total $s$-weight zero this gives
+\begin{equation}\label{eq:below}
+d_L=0
+\qquad(L<pJ).
+\end{equation}
+
+In the Laurent polynomial ring
+\[
+(\mathcal O_K/\mathfrak p)[s,s^{-1},u],
+\]
+the Frobenius identity gives
+\begin{equation}\label{eq:frob}
+R(s,u)^p
+\equiv
+\sum_{k,h}r_{k,h}^{p}s^{pk}u^{ph}
+\pmod{\mathfrak p}.
+\end{equation}
+Negative powers of $s$ cause no difficulty. By Lemma~\ref{lem:face}, $r_{0,J}=A$. At $(0,pJ)$, the only possible Frobenius contribution therefore comes from $(0,J)$, and
+\begin{equation}\label{eq:targetmod}
+d_{pJ}
+\equiv
+A^p
+\not\equiv0
+\pmod{\mathfrak p}.
+\end{equation}
+
+If
+\[
+pJ<L<p(J+1),
+\]
+then $L$ is not divisible by $p$. Hence the Frobenius sum on the right side of~\eqref{eq:frob} contains no monomial of $u$-degree $L$, and therefore
+\begin{equation}\label{eq:intervalmod}
+d_L\in\mathfrak p
+\qquad(pJ<L<p(J+1)).
+\end{equation}
+
+\begin{lemma}[Frobenius coefficient separation]\label{lem:frob}
+For every prime selected above,
+\[
+d_L=0\quad(L<pJ),
+\]
+\[
+d_{pJ}\notin\mathfrak p,
+\]
+and
+\[
+d_L\in\mathfrak p\quad(pJ<L<p(J+1)).
+\]
+\end{lemma}
+
+Normalize the discrete valuation $v_{\mathfrak p}$ by $v_{\mathfrak p}(p)=1$, which is valid because $p$ is unramified. Since $p>J$, one has $pJ<p^2$. Legendre's formula gives
+\begin{equation}\label{eq:targetfac}
+v_{\mathfrak p}((pJ)!)
+=
+v_p((pJ)!)
+=
+\left\lfloor\frac{pJ}{p}\right\rfloor
+=
+J.
+\end{equation}
+Because $d_{pJ}$ is a unit,
+\begin{equation}\label{eq:targetval}
+v_{\mathfrak p}\!\left(d_{pJ}(pJ)!\right)=J.
+\end{equation}
+
+For $pJ<L<p(J+1)$, one likewise has $L<p^2$ and
+\[
+v_{\mathfrak p}(L!)=v_p(L!)=J.
+\]
+Lemma~\ref{lem:frob} supplies one additional factor of $\mathfrak p$, so
+\begin{equation}\label{eq:midval}
+v_{\mathfrak p}(d_LL!)\ge J+1.
+\end{equation}
+For $L\ge p(J+1)$, the factorial itself satisfies
+\begin{equation}\label{eq:highval}
+v_{\mathfrak p}(L!)=v_p(L!)\ge J+1.
+\end{equation}
+
+Thus $d_{pJ}(pJ)!$ is the unique summand of valuation exactly $J$ in the finite sum
+\begin{equation}\label{eq:lambdasum}
+\Lambda(R^p)=\sum_{L\ge0}d_LL!.
+\end{equation}
+Every other summand has valuation at least $J+1$. A finite non-Archimedean sum with a unique minimum-valuation term cannot vanish. Hence
+\[
+\Lambda(R^p)\ne0.
+\]
+Since $R^p=\widehat P^{Np}$, Lemma~\ref{lem:diagonal} yields
+\begin{equation}\label{eq:nonzero-moment}
+\E[P^{Np}]=\Lambda(R^p)\ne0.
+\end{equation}
+
+\begin{lemma}[Unique factorial valuation]\label{lem:valuation}
+If zero lies in the convex hull of the weights of $P$, then for infinitely many suitable primes $p$ one has
+\[
+\E[P^{Np}]\ne0.
+\]
+In particular, not all positive moments of $P$ can vanish.
+\end{lemma}
+
+\begin{remark}
+The case $J=0$ is included. Then $d_0$ is a $\mathfrak p$-adic unit, every $d_L$ with $0<L<p$ lies in $\mathfrak p$, and every factorial with $L\ge p$ is divisible by $p$.
+\end{remark}
+
+\section{Proof of the main theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Assume
+\[
+\E[P^m]=0
+\qquad(m\ge1).
+\]
+If zero belonged to the convex hull of the weights of $P$, Lemma~\ref{lem:valuation} would produce an exponent $Np$ for which $\E[P^{Np}]\ne0$, a contradiction. Therefore
+\begin{equation}\label{eq:nozero}
+0\notin\conv(\wt(P)).
+\end{equation}
+Since the weights are integers on a one-dimensional line, either every weight of $P$ is strictly positive or every weight is strictly negative.
+
+Suppose first that every weight is positive. Let
+\[
+\delta:=\min\wt(P)>0
+\]
+and let
+\[
+M:=\min\wt(Q).
+\]
+Every monomial of $QP^m$ then has weight at least $M+m\delta$, which is positive for all sufficiently large $m$. Equation~\eqref{eq:contraction} therefore gives
+\[
+\E[QP^m]=0
+\]
+for all sufficiently large $m$.
+
+If every weight of $P$ is negative, let
+\[
+\delta:=\max\wt(P)<0
+\]
+and
+\[
+M:=\max\wt(Q).
+\]
+Every monomial of $QP^m$ has weight at most $M+m\delta$, which is negative for all sufficiently large $m$. Again~\eqref{eq:contraction} gives
+\[
+\E[QP^m]=0
+\]
+eventually.
+
+This proves $\mathrm{GMC}(2)$.
+\end{proof}
+
+\section*{AI-assisted research disclosure}
+
+OpenAI's GPT-5.6 Thinking was used during the discovery, development, adversarial analysis, and exposition of the proof. The author independently selected the final claims and assumes full responsibility for the mathematical content and for any corrections.
+
+\begin{thebibliography}{9}
+
+\bibitem{DEVZ}
+H. Derksen, A. van den Essen, and W. Zhao,
+``The Gaussian Moments Conjecture and the Jacobian Conjecture,''
+\emph{Israel Journal of Mathematics} \textbf{219} (2017), 917--928.
+DOI: 10.1007/s11856-017-1502-2.
+
+\bibitem{DvK}
+J. J. Duistermaat and W. van der Kallen,
+``Constant Terms in Powers of a Laurent Polynomial,''
+\emph{Indagationes Mathematicae} \textbf{9} (1998), no. 2, 221--231.
+DOI: 10.1016/S0019-3577(98)80020-7.
+
+\bibitem{Long}
+C. D. Long,
+``Small Counterexamples to the Gaussian Moments Conjecture,''
+arXiv:2607.18186v1, July 20, 2026.
+
+\end{thebibliography}
+
+\end{document}
